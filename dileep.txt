@@ -1,0 +1,67 @@
+def divisible_by_5_and_7(start, end):
+    for num in range(start, end + 1):
+        if num % 5 == 0 and num % 7 == 0:
+            yield num
+
+start_range = 1
+end_range = 100
+
+result_generator = divisible_by_5_and_7(start_range, end_range)
+
+for number in result_generator:
+    print(number)
+
+
+def interleave_strings(string_1, string_2):
+    result = ''
+    len_1, len_2 = len(string_1), len(string_2)
+    max_len = max(len_1, len_2)
+
+    for i in range(max_len):
+        if i < len_1:
+            result += string_1[i]
+        if i < len_2:
+            result += string_2[i]
+
+    return result
+
+string_1 = "AAAA"
+string_2 = "1234567"
+output = interleave_strings(string_1, string_2)
+print(output)
+
+
+
+class CircularQueue:
+    def _init_(self, max_length=5):
+        self.queue = {}
+        self.max_length = max_length
+        self.front = 0
+        self.rear = 0
+        self.size = 0
+
+    def enqueue(self, item):
+        if self.size == self.max_length:
+            self.dequeue()
+        self.queue[self.rear] = item
+        self.rear = (self.rear + 1) % self.max_length
+        self.size += 1
+
+    def dequeue(self):
+        if self.size == 0:
+            print("Queue is empty.")
+            return None
+        item = self.queue[self.front]
+        del self.queue[self.front]
+        self.front = (self.front + 1) % self.max_length
+        self.size -= 1
+        return item
+
+    def display(self):
+        print("Circular Queue:")
+        if self.size == 0:
+            print("Queue is empty.")
+            return
+        items = [self.queue[(self.front + i) % self.max_length] for i in range(self.size)]
+        print(items)
+
